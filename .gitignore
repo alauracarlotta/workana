@@ -1,0 +1,8 @@
+# Dir
+/venv
+/.venv
+**/__pycache__
+
+# Files
+db.sqlite3
+.env
