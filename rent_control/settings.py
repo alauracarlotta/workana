@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rent_control.core',
-    'rent_control.base',
 ]
 
 MIDDLEWARE = [
