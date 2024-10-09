@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import rent_control.core.views
+import apps.core.views
 
 urlpatterns = [
-    path('', rent_control.core.views.home),
+    path('', apps.core.views.home),
     path('admin/', admin.site.urls),
 ]
