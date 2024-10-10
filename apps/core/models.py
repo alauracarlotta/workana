@@ -16,7 +16,7 @@ class Client(models.Model):
         ordering = ['-id']
 
 # Tipo de Imóvel
-class Immobile_type(models.TextChoices):
+class ImmobileType(models.TextChoices):
     APARTAMENT = 'APARTAMENTO', 'APARTAMENTO'
     KITNET = 'KITNET', 'KITNET'
     HOUSE = 'HOUSE', 'HOUSE'
@@ -24,7 +24,7 @@ class Immobile_type(models.TextChoices):
 # Imóvel
 class Immobile(models.Model):
     code = models.CharField(max_length=100)
-    type_item = models.CharField(max_length=100, choices=Immobile_type.choices)
+    type_item = models.CharField(max_length=100, choices=ImmobileType.choices)
     address = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_locate = models.BooleanField(default=False)
