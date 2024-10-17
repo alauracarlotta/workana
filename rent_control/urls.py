@@ -24,6 +24,7 @@ import apps.core.views
 urlpatterns = [
     path('', apps.core.views.list_location, name='list-location'),
     path('form-client/', apps.core.views.form_client, name='client-create'),
+    path('form-immobile/', apps.core.views.form_immobile, name='immobile-create'),
     path('admin/', admin.site.urls),
 ]
 

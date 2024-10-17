@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from apps.core.forms import ClientForm
-from .models import Immobile
+from apps.core.forms import ClientForm, ImmobileForm
+from .models import Immobile, ImmobileImages
 
 """ def home(request):
     return render(request, 'index.html') """
@@ -20,3 +20,19 @@ def form_client(request):
             form.save()
             return redirect('list-location')
     return render(request, 'form-client.html', {'form': form})
+
+def form_immobile(request):
+    form = ImmobileForm()
+    if request.method == 'POST':
+        form = ImmobileForm(request.POST, request.FILES)
+        if form.is_valid():
+            immobile = form.save()
+            files = request.FILES.getlist('immobile')
+            if files:
+                for file in files:
+                    ImmobileImages.objects.create(
+                        immobile = immobile,
+                        image = file
+                    )
+            return redirect('list-location')
+    return render(request, 'form-immobile.html', {'form': form})
