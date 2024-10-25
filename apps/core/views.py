@@ -56,3 +56,7 @@ def form_location(request, id):
 
     context = {'form': form, 'location': get_locate}
     return render(request, 'form-location.html', context)
+
+def reports(request):
+    immobile = Immobile.objects.all()
+    return render(request, 'reports.html', {'immobiles': immobile})

@@ -26,6 +26,7 @@ urlpatterns = [
     path('form-client/', apps.core.views.form_client, name='client-create'),
     path('form-immobile/', apps.core.views.form_immobile, name='immobile-create'),
     path('form-location/<int:id>/', apps.core.views.form_location, name='location-create'), 
+    path('reports/', apps.core.views.reports, name='reports'), 
     path('admin/', admin.site.urls),
 ]
 

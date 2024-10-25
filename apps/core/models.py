@@ -47,7 +47,7 @@ class ImmobileImages(models.Model):
 
 # Registrar Locação
 class RegisterLocation(models.Model):
-    immobile = models.ForeignKey(Immobile, on_delete=models.CASCADE, related_name='reg_location')
+    immobile = models.ForeignKey(Immobile, on_delete=models.CASCADE, related_name='register_location')
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     date_start = models.DateTimeField('Início')
     date_end = models.DateTimeField('Fim')
