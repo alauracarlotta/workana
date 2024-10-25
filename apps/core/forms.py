@@ -1,7 +1,8 @@
 from django import forms
-from .models import Client, Immobile
+from .models import Client, Immobile, RegisterLocation
 
 
+## Cadastra Cliente
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
@@ -12,22 +13,6 @@ class ClientForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
-""" class ImmobileForm(forms.ModelForm):
-    immobile = forms.FileField(widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}))
-    class Meta:
-        model = Immobile
-        fields = '__all__'
-        exclude = ('is_locate',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if field.widget.__class__ in [forms.CheckboxInput, forms.RadioSelect]:
-                field.widget.attrs['class'] = 'form-check-input'
-            else:
-                field.widget.attrs['class'] = 'form-control' """
-
-""" A partir daqui """
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
@@ -54,10 +39,25 @@ class ImmobileForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('is_locate',)
 
-    def __init__(self, *args, **kwargs):  # Adiciona
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field.widget.__class__ in [forms.CheckboxInput, forms.RadioSelect]:
                 field.widget.attrs['class'] = 'form-check-input'
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+## Registrar Locação do Imóvel
+class RegisterLocationForm(forms.ModelForm):
+    date_start = forms.DateTimeField(widget = forms.DateInput(format = '%d-%m-%Y', attrs = {'type': 'date',}))
+    date_end = forms.DateTimeField(widget = forms.DateInput(format = '%d-%m-%Y', attrs = {'type': 'date',}))
+
+    class Meta:
+        model = RegisterLocation
+        fields = '__all__'
+        exclude = ('immobile', 'create_at',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from apps.core.forms import ClientForm, ImmobileForm
+from apps.core.forms import ClientForm, ImmobileForm, RegisterLocationForm
 from .models import Immobile, ImmobileImages
 
 """ def home(request):
@@ -36,3 +36,23 @@ def form_immobile(request):
                     )
             return redirect('list-location')
     return render(request, 'form-immobile.html', {'form': form})
+
+def form_location(request, id):
+    get_locate = Immobile.objects.get(id = id)
+    form = RegisterLocationForm()
+    
+    if request.method == 'POST':
+        form = RegisterLocationForm(request.POST)
+        if form.is_valid():
+            location_form = form.save(commit = False)
+            location_form.immobile = get_locate
+            location_form.save()
+
+            rented_immobile = Immobile.objects.get(id = id)
+            rented_immobile.is_locate = True
+            rented_immobile.save()
+
+            return redirect('list-location')
+
+    context = {'form': form, 'location': get_locate}
+    return render(request, 'form-location.html', context)
