@@ -6,6 +6,63 @@
 
 {% block content %}
     <div class="container">
+        <div class="row g-3 m-3 bg-light p-3">
+            {% comment %} NOME OU E-MAIL DO CLIENTE {% endcomment %}
+            <div class="col-auto">
+                <label>Nome / E-mail</label>
+                <form class="d-flex" action="{% url 'reports' %}">
+                    <input type="search" name="client" class="form-control me-2" placeholder="Pesquisar por cliente..." aria-label="Search">
+                    <button class="btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+            {% comment %} STATUS DA LOCACÇÃO {% endcomment %}
+            <div class="col-auto">
+                <form action="{% url 'reports' %}">
+                    <label>Status de Locação</label>
+                    <select name="is_locate" class="form-select" onchange="this.form.submit()">
+                        <option></option>
+                        <option value="True" {% if request.GET.is_locate == 'True' %} selected {% endif %}>LOCADO</option>
+                        <option value="False" {% if request.GET.is_locate == 'False' %} selected {% endif %}>NÃO LOCADO</option>
+                    </select>
+                </form>
+            </div>
+
+            {% comment %} TIPO DE IMÓVEL {% endcomment %}
+            <div class="col-auto">
+                <form action="{% url 'reports' %}">
+                    <label>Tipo de Imóvel</label>
+                    <select name="type_item" class="form-select" onchange="this.form.submit()">
+                        <option></option>
+                        <option value="APARTAMENT" {% if request.GET.type_item == 'APARTAMENT' %} selected {% endif %}>APARTAMENTO</option>
+                        <option value="KITNET" {% if request.GET.type_item == 'KITNET' %} selected {% endif %}>KITNET</option>
+                        <option value="HOUSE" {% if request.GET.type_item == 'HOUSE' %} selected {% endif %}>CASA</option>
+                    </select>
+                </form>
+            </div>
+
+            {% comment %} INTERVALO DE DATA {% endcomment %}
+            <div class="col-auto">
+                <form class="d-flex align-items-end" action="{% url 'reports' %}">
+                    <div>
+                        <label>Início</label>
+                        <input value="{{request.GET.date_start}}" type="date" name="date_start" class="form-control me-2">
+                    </div>
+                    <div>
+                        <label>Final</label>
+                        <input value="{{request.GET.date_end}}" type="date" name="date_end" class="form-control me-2">
+                    </div>
+                    <button class="btn btn-btn-outline-dark" type="submit"><i class="fas fa-filter"></i></button>
+                </form>
+            </div>
+
+            <div class="col-auto align-self-end">
+                <a class="btn btn-danger" href="{% url 'reports' %}">
+                    <i class="fas fa-window-close"></i>
+                </a>
+            </div>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>

@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.db.models import Q
 from apps.core.forms import ClientForm, ImmobileForm, RegisterLocationForm
 from .models import Immobile, ImmobileImages
 
@@ -59,4 +60,29 @@ def form_location(request, id):
 
 def reports(request):
     immobile = Immobile.objects.all()
+    get_client = request.GET.get('client')
+    get_locate = request.GET.get('is_locate')
+    get_type_item = request.GET.get('type_item')
+    get_date_start = request.GET.get('date_start')
+    get_date_end = request.GET.get('date_end')
+    print(get_date_start)
+    print(get_date_end)
+    
+    if get_client:
+        immobile = Immobile.objects.filter(
+            Q(register_location__client__name__icontains = get_client) |
+            Q(register_location__client__email__icontains = get_client)
+        )
+        
+    if get_locate:
+        immobile = Immobile.objects.filter(is_locate = get_locate)
+    
+    if get_type_item:
+        immobile = Immobile.objects.filter(type_item = get_type_item)
+    
+    if get_date_start and get_date_end:
+        immobile = Immobile.objects.filter(
+            Q(register_location__create_at__range = [get_date_start, get_date_end])
+        )
+    
     return render(request, 'reports.html', {'immobiles': immobile})
