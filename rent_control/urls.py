@@ -16,9 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import rent_control.core.views
+from django.conf import settings
+from django.conf.urls.static import static
+import apps.core.views 
+
 
 urlpatterns = [
-    path('', rent_control.core.views.home),
+    path('', apps.core.views.list_location, name='list-location'),
+    path('form-client/', apps.core.views.form_client, name='client-create'),
+    path('form-immobile/', apps.core.views.form_immobile, name='immobile-create'),
+    path('form-location/<int:id>/', apps.core.views.form_location, name='location-create'), 
+    path('reports/', apps.core.views.reports, name='reports'), 
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
